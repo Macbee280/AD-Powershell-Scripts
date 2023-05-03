@@ -2,7 +2,8 @@ Import-Module ActiveDirectory
 
 # this defaults to csv fields delimited by a comma. If your CSV file uses a different 
 # character, then add parameter '-Delimiter' followed by the actual character
-$ADUsers = Import-Csv -Path C:\Users\professorgabe\scripts\KennedyADUsers.csv
+
+$ADUsers = Import-Csv -Path C:\path\to\file\KennedyADUsers.csv
 
 # the Where-Object clause is just a precaution to omit records that have no username value
 $ADUsers | Where-Object { $_.username -match '\S'} | ForEach-Object {
@@ -30,7 +31,7 @@ $ADUsers | Where-Object { $_.username -match '\S'} | ForEach-Object {
             Enabled               = $true
             DisplayName           = "$Firstname $Lastname"
             Path                  = $_.ou
-            AccountPassword       = (ConvertTo-SecureString "A7Lancer2022!" -AsPlainText -Force)
+            AccountPassword       = (ConvertTo-SecureString "PASSWORD" -AsPlainText -Force)
             ChangePasswordAtLogon = $false
             Company               = $Company
             Department            = $Department
@@ -43,11 +44,12 @@ $ADUsers | Where-Object { $_.username -match '\S'} | ForEach-Object {
         # create the user and report back
         New-ADUser @userParams
 
-        Write-Host "Created new user '$Username' with initial password: A7Lancer2022!"
+        Write-Host "Created new user '$Username' with initial password: PASSWORD!"
     }
 }
 
 #script to add bulk user to multiple security group
+#change OU dependent on year
 Get-ADUser -SearchBase 'OU=2026,OU=Students,DC=jfk,DC=local' -Filter * | ForEach-Object {Add-ADGroupMember -Identity 'students2026' -Members $_ }
 Get-ADUser -SearchBase 'OU=2026,OU=Students,DC=jfk,DC=local' -Filter * | ForEach-Object {Add-ADGroupMember -Identity 'O365 A5 Students' -Members $_ }
 Get-ADUser -SearchBase 'OU=2026,OU=Students,DC=jfk,DC=local' -Filter * | ForEach-Object {Add-ADGroupMember -Identity 'ZoomBasic' -Members $_ }
