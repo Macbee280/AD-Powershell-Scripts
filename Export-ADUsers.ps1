@@ -1,5 +1,5 @@
 ﻿# Split path
-$Path = Split-Path -Parent "C:\Users\professorgabe\scripts\*.*"
+$Path = Split-Path -Parent "C:\path\to\folder\*.*"
 
 # Create variable for the date stamp in log file
 $LogDate = Get-Date -f yyyyMMddhhmm
@@ -16,7 +16,7 @@ Import-Module ActiveDirectory
 # Or use the root domain like DC=exoip,DC=local
 $DNs = @(
     "OU=2026,OU=Students,DC=jfk,DC=local"
-
+# change the OU for the specific user
 )
 
 # Create empty array
