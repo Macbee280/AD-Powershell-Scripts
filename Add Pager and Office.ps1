@@ -1,5 +1,5 @@
 ﻿Import-Module ActiveDirectory
-$names = Import-Csv C:\Users\professorgabe\scripts\pager.csv
+$names = Import-Csv C:\path\to\file\pager.csv
 
 ForEach ($Name in $Names)
 {
